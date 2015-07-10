@@ -44,17 +44,9 @@ class SessionCookieHandler extends Handler
 	 */
 	function SessionCookieHandler($info = null)
 	{
-		if(!$info)
-		{
-			$info = Context::getDBInfo();
-		}
-
-		if($info)
-		{
-			$class = 'SessionCookieBasic';
-			include_once sprintf('%sclasses/session/%s.class.php', _XE_PATH_, $class);
-			$this->handler = call_user_func(array($class, 'getInstance'), $url);
-		}
+		$class = 'SessionCookieBasic';
+		include_once sprintf('%sclasses/session/%s.class.php', _XE_PATH_, $class);
+		$this->handler = call_user_func(array($class, 'getInstance'), $url);
 	}
 
 	/**
@@ -147,7 +139,7 @@ class SessionCookieHandler extends Handler
 	 */
 	function set($key, $obj, $valid_time = 0)
 	{
-		if(!$this->handler && !$key)
+		if(!$this->handler || !$key)
 		{
 			return false;
 		}
